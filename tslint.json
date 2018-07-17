@@ -2,10 +2,6 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
-  "extends": [
-    "tslint:latest",
-    "tslint-config-prettier"
-  ],
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
