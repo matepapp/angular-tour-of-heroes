@@ -5,11 +5,17 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from "./hero";
 import { MessageService } from "./message.service";
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: "root"
 })
+
 export class HeroService {
   private heroesUrl = 'api/heroes';
+
   constructor(private http: HttpClient, private messageService: MessageService) {}
 
   private log(message: string) {
@@ -30,6 +36,14 @@ export class HeroService {
       .pipe(
         tap(heroes => this.log('fetched heroes')),
         catchError(this.handleError('getHeroes', []))
+      );
+  }
+
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, httpOptions)
+      .pipe(
+        tap(_ => this.log('updated hero')),
+        catchError(this.handleError<any>("updateHero", []))
       );
   }
 
